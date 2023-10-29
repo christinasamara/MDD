@@ -31,6 +31,16 @@ This project comprises several essential components for handling multidimensiona
 - Example Datasets: The code includes example datasets, but you can easily adapt them to your own data.
 - Nearest Neighbor Search: KD-Tree and LSH enable efficient nearest neighbor search, while Quadtree, R-tree, and Range Tree support various multidimensional data search operations.
 
+## Database Details
+
+The dataset in this project includes information about individuals and their educational background, particularly focusing on the fields of computer science and engineering. The database consists of the following fields:
+
+- **SURNAME**: The last name of the individual.
+- **NAME**: The first name of the individual.
+- **AWARDS**: The number of awards or distinctions received by the individual.
+- **EDUCATION**: A brief summary of the individual's educational journey and achievements.
+
+
 ## License
 
 This code is provided under MIT LICENSE. For detailed usage terms and permissions, please refer to the LICENSE.md file.
