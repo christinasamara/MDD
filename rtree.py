@@ -2,7 +2,7 @@
 from LSH import lsh
 import numpy as np
 import pandas as pd
-
+import time
 class Point:
     def __init__(self, id, x, y):
         self.id = id
@@ -156,7 +156,8 @@ def print_rtree(node, level=0):
 
 
 
-df = pd.read_csv("data.csv")
+#df = pd.read_csv("data.csv")
+df = pd.read_csv("fake.csv")
 dfres = df.copy()
 df=df.drop(df.columns[[1]],axis=1)
 df['SURNAME'] = df['SURNAME'].apply(lambda x: ord(x[0].lower()))
@@ -171,10 +172,14 @@ points = []
 for index, row in df.iterrows():
     points.append(Point(index, row['SURNAME'], row['AWARDS']))
 
+creationTime = time.time()
 rtree = RTree(min_child=2, max_child=6)
-
 for p in points:
     rtree.insert(p)
+
+creationTime = time.time()-creationTime
+
+print("The creation time for the tree is",creationTime)
 
 
 
@@ -185,10 +190,15 @@ results = []
 
 xmin = ord(input("Give first letter: ").lower())
 xmax = ord(input("Give second letter: ").lower())
-
 amin = int(input("Give minimum awards: "))
+
+queryTime = time.time()
 r = Rectangle(xmin, amin, xmax, max_y)
 results = rtree.root.search_rtree(r)
+queryTime = time.time() - queryTime
+
+print("The query time for the tree is",queryTime)
+
 print()
 idlist = list()
 for x in results:
