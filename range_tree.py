@@ -2,7 +2,7 @@ from LSH import lsh
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import time
 
 
 from collections import namedtuple
@@ -131,16 +131,27 @@ def search_range(root, minimum, maximum,awards):
 
 # point_list = [(7, 2), (7, 2), (9, 6), (4, 7), (8, 1), (2, 3)]
 # tree = kdtree(point_list)
-df = pd.read_csv("data.csv")
+#df = pd.read_csv("data.csv")
+df = pd.read_csv("fake.csv")
 dfres = df.copy()
 df=df.drop(df.columns[[1]],axis=1)
 df['SURNAME'] = df['SURNAME'].apply(lambda x: ord(x[0].lower()))
 df=df.drop('EDUCATION',axis=1)
 
 test= list(df.itertuples(index=True,name=None))
-tree = binaryTreeX(test)
 
-result = (search_range(tree,ord("a"),ord("z"),0))
+creationTime = time.time()
+tree = binaryTreeX(test)
+creationTime = time.time()-creationTime
+
+print("The creation time for the tree is",creationTime)
+
+queryTime = time.time()
+
+result = (search_range(tree,ord("a"),ord("c"),0))
+queryTime = time.time() - queryTime
+
+print("The query time for the tree is",queryTime)
 
 print(result)
 idlist = list()
