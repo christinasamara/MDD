@@ -3,7 +3,7 @@ from math import sqrt
 from LSH import lsh
 import numpy as np
 import pandas as pd
-
+import time
 
 class Point():  #asci prwto gramma kai award + id
     def __init__(self, x, y,id): 
@@ -127,7 +127,8 @@ class QuadTree:
             for p in self.points:
                 print(f"({p.x}, {p.y})", end = " ")
 
-df = pd.read_csv("data.csv")
+#df = pd.read_csv("data.csv")
+df = pd.read_csv("fake.csv")
 dfres = df.copy()
 df=df.drop(df.columns[[1]],axis=1)
 df['SURNAME'] = df['SURNAME'].apply(lambda x: ord(x[0].lower()))
@@ -145,10 +146,15 @@ for index, row in df.iterrows():
 
 qboundary = Rectangle((max_x - min_x)/2 + min_x, (max_y-min_y)/2 + min_y, (max_x - min_x)/2, (max_y - min_y)/2)
 
+creationTime = time.time()
 qtree = QuadTree(qboundary)
 
 for p in points:
     qtree.insert(p)
+
+creationTime = time.time()-creationTime
+
+print("The creation time for the tree is",creationTime)
 
 
 
@@ -161,9 +167,12 @@ xmax = ord(input("Give second letter: ").lower())
 amin = int(input("Give minimum awards: "))
 
 
+queryTime = time.time()
 qrange = Rectangle ((xmax - xmin)/2 + xmin, (max_y-amin)/2 + amin, (xmax - xmin)/2, (max_y - amin)/2)
 results = qtree.query(qrange) 
+queryTime = time.time() - queryTime
 
+print("The query time for the tree is",queryTime)
 
 #for p in results:
 #    print(f"({p.x}, {p.y}, {p.id})", end = " ")
